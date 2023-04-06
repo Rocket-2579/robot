@@ -1,0 +1,11 @@
+<launch>
+    <!-- 在launch文件中直接加载xacro 使用command属性，属性值就是调用 xacro 功能包的 xacro 程序直接解析 xacro 文件-->
+    <param name="robot_description" command="$(find xacro)/xacro $(find urdf_rviz)/urdf/xacro/robot01.xacro" />
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find urdf_rviz)/config/show_myCar.rviz" />
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+    <!-- 控制节点 -->
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" output="screen" />
+
+</launch>

@@ -1,0 +1,18 @@
+<launch>
+    
+    <param name="robot_description" command="$(find xacro)/xacro $(find urdf_rviz)/urdf/xacro/robot01.xacro" />
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find urdf_rviz)/config/show_myCar.rviz" />
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+    <!-- arbotix节点 -->
+    <!--  <node> 调用了 arbotix_python 功能包下的 arbotix_driver 节点
+        <rosparam> arbotix 驱动机器人运行时，需要获取机器人信息，可以通过 file 加载配置文件
+        <param> 在仿真环境下，需要配置 sim 为 true
+    -->
+    <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+     <rosparam file="$(find urdf_rviz)/config/control.yaml" command="load" />
+     <param name="sim" value="true" />
+    </node>
+    
+</launch>

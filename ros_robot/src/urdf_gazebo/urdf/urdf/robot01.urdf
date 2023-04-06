@@ -1,0 +1,41 @@
+<!-- 
+    创建一个机器人模型(盒状即可)，显示在 Gazebo 中 
+-->
+<!-- 
+    注意， 当 URDF 需要与 Gazebo 集成时，和 Rviz 有明显区别:
+    1.必须使用 collision 标签，因为既然是仿真环境，那么必然涉及到碰撞检测，collision 提供碰撞检测的依据。
+    2.必须使用 inertial 标签，此标签标注了当前机器人某个刚体部分的惯性矩阵，用于一些力学相关的仿真计算。
+    3.颜色设置，也需要重新使用 gazebo 标签标注，因为之前的颜色设置为了方便调试包含透明度，仿真环境下没有此选项。
+ -->
+<robot name="mycar">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.5 0.2 0.1" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <material name="yellow">
+                <color rgba="0.5 0.3 0.0 1" />
+            </material>
+        </visual>
+        <!-- collision -> 连杆的碰撞属性 设置一个阈值来判断是否发生了碰撞 -->
+        <!-- 如果是标准的几何体，直接复制visual的geometry和origin即可 -->
+        <collision>
+            <geometry>
+                <box size="0.5 0.2 0.1" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        </collision>
+        <!-- Inertial -> 连杆的惯性矩阵 -->
+        <inertial>
+            <origin xyz="0 0 0" />
+            <mass value="6" />
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+        </inertial>
+    </link>
+    <!-- gazebo自己的颜色标签设置 -->
+    <gazebo reference="base_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+</robot>
